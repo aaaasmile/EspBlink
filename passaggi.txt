@@ -1,0 +1,37 @@
+Con la WLC ho a disposizione python attraverso pyenv
+pyenv install 3.7.0a3
+pyenv local 3.7.0a3
+sudo pip install --upgrade pip
+sudo pip install --upgrade pyserial
+pip install --ignore-installed pyserial
+
+Non ho idea come mai non funzioni esptool dopo averlo installato con pip.
+Allora ho semplicemente clonato la repository:
+git clone https://github.com/espressif/esptool.git
+
+igors@Laptop-Toni:/mnt/d/Arduino/PlatformIO/esptool$ sudo python esptool.py --port /dev/ttyS4  --baud 115200 flash_id
+Che produce questo risultato:
+            esptool.py v3.1-dev
+            Serial port /dev/ttyS4
+            Connecting....
+            Detecting chip type... ESP8266
+            Chip is ESP8266EX
+            Features: WiFi
+            Crystal is 26MHz
+            MAC: a4:cf:12:bf:62:76
+            Uploading stub...
+            Running stub...
+            Stub running...
+            Manufacturer: ef
+            Device: 4016
+            Detected flash size: 4MB
+            Hard resetting via RTS pin...
+
+bene, questo vuoldire che la comunicazione con il tool esptool.py funziona.
+Ora che ho esptool funzionante basta usare in WLC:
+sudo python esptool.py --port /dev/ttyS4  --baud 115200 write_flash --flash_mode dio 0x0 ../Hello2/.pio/build/nodemcuv2/firmware.bin
+E il mio nodemcuv2 viene attulizzato in un colpo solo senza nessun problema.
+
+
+
+
